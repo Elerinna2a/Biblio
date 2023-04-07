@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<h1>Livre</h1>
+		{{app.user}}
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ livre.id }}</td>
+				</tr>
+				<tr>
+					<th>Titre</th>
+					<td>{{ livre.titre }}</td>
+				</tr>
+				<tr>
+					<th>Auteur</th>
+					<td>{{ livre.auteur }}</td>
+				</tr>
+				<tr>
+					<th>Editeur</th>
+					<td>{{ livre.editeur }}</td>
+				</tr>
+				<tr>
+					<th>Genre</th>
+					<td>{{ livre.genre }}</td>
+				</tr>
+				<tr>
+					<th>IsDisponible</th>
+					<td>{{ livre.isDisponible ? 'Oui' : 'Non' }}</td>
+				</tr>
+				<tr>
+					<th>Date_publication</th>
+					<td>{{ livre.datePublication ? livre.datePublication|date('Y-m-d') : '' }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<a href="{{ path('app_livre_index') }}">back to list</a>
+
+		{% if is_granted('ROLE_ADMIN') %}{% endif %}
+	</div>
+{% endblock %}

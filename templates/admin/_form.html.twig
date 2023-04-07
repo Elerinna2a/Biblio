@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+<a class="mt-2" href="{{ path('app_admin_index') }}">
+	<button class="btn btn-primary">Back</button>
+</a>
+{{ form_end(form) }}

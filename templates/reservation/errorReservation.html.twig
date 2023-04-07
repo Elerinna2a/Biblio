@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	<div class="container">
+		<h1>
+			Impossible de réserver car vous n'avez pas les accès !
+		</h1>
+		<p>
+			Retour a la page principale :
+			<a href="{{ path('app_livre_index') }}">Pas d'acceuil</a>
+		</p>
+	</div>
+{% endblock %}

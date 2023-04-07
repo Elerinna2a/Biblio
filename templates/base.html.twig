@@ -1,19 +1,81 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link
+		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<header class="p-3 text-bg-dark">
+
+		<div class="container">
+			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 d-flex gap-2 align-items-center">
+					<div>
+						{% block headline %}Bienvenu(e)
+							{{app.user}}
+						{% endblock %}
+					</div>
+					<li>
+						<a href="{{ path('app_livre_index') }}">
+							<button type="button" class="btn btn-outline-light">Livres</button>
+						</a>
+					</li>
+					{% if is_granted('ROLE_ADMIN') %}
+						<li>
+							<a href="/admin">
+								<button type="button" class="btn btn-outline-light">Admin</button>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_admin_index') }}">
+								<button type="button" class="btn btn-outline-light">Utilisateurs</button>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_emprunt_index') }}">
+								<button type="button" class="btn btn-outline-light">Emprunts</button>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_reservation_index') }}">
+								<button type="button" class="btn btn-outline-light">
+									Réservation
+								</button>
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('app_admin_new') }}">
+								<button type="button" class="btn btn-success">Création User</button>
+							</a>
+						</li>
+					</li>
+				{% endif %}
+			</ul>
+
+			<div class="text-end">
+				{% if app.user %}
+					<a href="{{ path('app_logout') }}">
+						<button type="button" class="btn btn-outline-light me-2">logout</button>
+					</a>
+				{% else %}
+					<a href="{{ path('app_login') }}">
+						<button type="button" class="btn btn-outline-light me-2">Login</button>
+					</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</html></header><body>
+{% block body %}{% endblock %}</body></html></html>

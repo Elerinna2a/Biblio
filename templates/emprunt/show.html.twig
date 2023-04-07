@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunt
+{% endblock %}
+
+{% block body %}
+	<h1>Emprunt</h1>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ emprunt.id }}</td>
+			</tr>
+			<tr>
+				<th>DateEmprunt</th>
+				<td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>DateRetour</th>
+				<td>{{ emprunt.dateRetour|date('Y-m-d') }}</td>
+			</tr>
+			{% if emprunt.dateRetourRetard is not empty %}
+				<tr>
+					<th>FraisRetard</th>
+					<td>{{ emprunt.fraisRetard }}
+						€</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Retard ?</th>
+				<td>{{ emprunt.fraisRetard ? 'Oui' : 'Non' }}</td>
+			</tr>
+			{% if emprunt.dateRetourRetard is not empty %}
+				<tr>
+					<th>DateRetourRetard</th>
+					<td>{{ emprunt.dateRetourRetard ? emprunt.dateRetourRetard|date('Y-m-d') : '' }}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+	<a href="{{ path('app_emprunt_index') }}">
+		<button type="button" class="btn btn-primary">Back</button>
+	</a>
+{% endblock %}

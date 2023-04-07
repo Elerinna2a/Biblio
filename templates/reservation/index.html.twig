@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation index
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="m-5">Liste des réservations
+			<a href="{{ path('app_reservation_new') }}">
+				<button type="button" class="btn btn-primary">Créer</button>
+			</a>
+		</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Titre du livre</th>
+					<th>Nom du reserveur</th>
+					<th>Date de réservation</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for reservation in reservations %}
+					<tr>
+						<td>{{ reservation.id }}</td>
+						{% for livre in reservation.livres %}
+							<td>{{livre.titre}}</td>
+						{% endfor %}
+						<td>{{reservation.user}}</td>
+						<td>{{ reservation.dateReservation ? reservation.dateReservation|date('d/m/Y') : '' }}</td>
+						<td class="d-flex gap-1">
+							<a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">
+								<button type="button" class="btn btn-primary">Voir</button>
+							</a>
+							<a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">
+								<button type="button" class="btn btn-primary">Modifier</button>
+							</a>
+							{{ include('reservation/_delete_form.html.twig') }}
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="3">Pas réservation en cours</td>
+					</tr>
+					<a href="{{ path('app_reservation_new') }}">
+						<button type="button" class="btn btn-primary">Créer</button>
+					</a>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

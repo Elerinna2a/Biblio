@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>
+			{{admin}}
+		</h1>
+
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ admin.id }}</td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td>{{ admin.email }}</td>
+				</tr>
+				<tr>
+					<th>Roles</th>
+					<td>{{ admin.roles ? admin.roles|json_encode : '' }}</td>
+				</tr>
+				<tr>
+					<th>Password</th>
+					<td>{{ admin.password }}</td>
+				</tr>
+				<tr>
+					<th>Nom</th>
+					<td>{{ admin.nom }}</td>
+				</tr>
+				<tr>
+					<th>Prenom</th>
+					<td>{{ admin.prenom }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div>
+			<h3>Liste des livres empruntés</h3>
+			<table class="table">
+				<td>
+					{% for emprunt in admin.emprunts %}
+						<tr>
+							<th>Livre empruntés -
+								{{ emprunt.id }}
+							</th>
+							{% for livre in emprunt.livres %}
+								<td>{{ livre.titre }}</td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</td>
+			</table>
+
+		</div>
+		<a href="{{ path('app_admin_index') }}">
+			<button class="btn btn-primary">Back</button>
+		</a>
+	</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Admin
+{% endblock %}
+
+{% block body %}
+	<div class="container d-flex flex-column">
+		<h1>Modification de l'utilisteur :
+			{{admin}}</h1>
+		{{ include('admin/_form.html.twig', {'button_label': 'Update'}) }}
+	</div>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Liste des livres disponibles
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="d-flex gap-5 m-5 align-items-center justify-content-center">
+			<h1>Liste des livres disponibles
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('app_livre_new') }}">
+						<button type="button" class="btn btn-primary">Créer</button>
+					</a>
+				{% endif %}
+			</h1>
+
+			<form class="d-flex" role="search" method="GET" action="{{ path('app_livre_search') }}">
+				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchTerm" name="q">
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			</form>
+
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<th>Id</th>
+					{% endif %}
+					<th>Titre</th>
+					<th>Auteur</th>
+					<th>Editeur</th>
+					<th>Genre</th>
+					<th>Disponibilité</th>
+					{% if is_granted('ROLE_ADMIN') %}
+						<th>Emprunté ?</th>
+						<th>Réservé ?</th>
+					{% endif %}
+					<th>Date de publication</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for livre in livres %}
+					<tr>
+						{% if is_granted('ROLE_ADMIN') %}
+							<td>{{ livre.id }}</td>
+						{% endif %}
+						<td>{{ livre.titre }}</td>
+						<td>{{ livre.auteur }}</td>
+						<td>{{ livre.editeur }}</td>
+						<td>{{ livre.genre }}</td>
+						<td>{{ livre.isDisponible() ? 'Non' : 'Oui' }}</td>
+						{% if is_granted('ROLE_ADMIN')%}
+							<td>{{ livre.emprunts.isEmpty() ? 'Non' : 'Oui' }}</td>
+							<td>{{ livre.reservations.isEmpty() ? 'Non' : 'Oui' }}</td>
+						{% endif %}
+						<td>{{ livre.datePublication ? livre.datePublication|date('d/m/Y') : '' }}</td>
+						<td class="d-flex gap-1">
+							<a href="{{ path('app_livre_show', {'id': livre.id}) }}">
+								<button type="button" class="btn btn-primary">Voir</button>
+							</a>
+							{% if livre.isDisponible() and livre.reservations.isEmpty()%}
+								{# Ici, le bouton sera afficher au cas ou si une personne veut reserver un livre et devra renvoyer un message/mail a l'admin #}
+								<a href="{{ path('app_reservation_index') }}">
+									<button type="button" class="btn btn-primary">Réserver</button>
+								</a>
+							{% endif %}
+							{% if is_granted('ROLE_ADMIN') %}
+								<a href="{{ path('app_livre_edit', {'id': livre.id}) }}">
+									<button type="button" class="btn btn-primary">Modifier</button>
+								</a>
+								{{ include('livre/_delete_form.html.twig') }}
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
